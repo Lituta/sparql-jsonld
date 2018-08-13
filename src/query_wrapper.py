@@ -42,6 +42,7 @@ class QueryWrapper(object):
             updater = Updater(context)
 
             subjects = ori_q.get_limit_subjects(graph=self.graph)
+            # print('num uri: ', len(subjects))
 
             try:
 
@@ -49,10 +50,12 @@ class QueryWrapper(object):
                 if paging:
                     res = []
                     ss = [subjects[i:i + paging] for i in range(0, len(subjects), paging)]
+                    # print('num page: ', len(ss))
                     for s in ss:
                         q = SPARQLQuery(query)
                         q.update_query_by_frame(updater, frame, optional=optional, specified_subjects=s)
                         res += json.loads(self.query_single_construct(q))
+                        # print(len(res))
                 else:
                     ori_q.update_query_by_frame(updater, frame, optional=optional, specified_subjects=subjects)
                     res = json.loads(self.query_single_construct(ori_q))
@@ -64,9 +67,9 @@ class QueryWrapper(object):
                     **frame
                 }
 
-                if res == '[]':
+                if not res:
                     return {'@graph': [], '@info': self.wrap_info(0, -1, time_query, -1)}
-                # print(res)
+                # print('res before framing: ', len(res))
 
                 start_frame = time.time()
                 framed = jsonld.frame(res,

@@ -9,7 +9,7 @@ PREFIX sc: <http://purl.org/science/owl/sciencecommons/>
 PREFIX text: <http://jena.apache.org/text#>
 
 PREFIX dcm: <http://dcm.com/>
-select ?p ?d
+select distinct ?p
 where {
   ?p a dig:AttackEvent .
   ?p scm:publisher "asu-dark-mention-rules" .

@@ -13,7 +13,7 @@ select (count(?b) as ?term_over_time) ?dateAttr
 where{
   ?b a scm:Blog .
   ?b scm:datePublished ?d .
-  ?b text:query "vulnerability"
+  ?b text:query "vulnerable"
   FILTER ( ?d <= xsd:dateTime("2017-08-01T00:00:00"))
   bind(xsd:date(?d) as ?dateAttr)
 } group by ?dateAttr
